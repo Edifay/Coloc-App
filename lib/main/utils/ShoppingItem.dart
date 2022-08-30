@@ -4,23 +4,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../handlers/ShoppingListHandler.dart';
+import 'ItemType.dart';
 
 class ShoppingItem {
   String name;
   String description;
   num count;
+  ItemType type;
 
   String? id;
 
-  ShoppingItem(this.name, this.description, this.count);
-
-  ShoppingItem.fromAll(this.name, this.description, this.count, this.id);
+  ShoppingItem.fromAll(this.name, this.description, this.count, this.type, this.id);
 
   factory ShoppingItem.fromJson(Map<String, dynamic> json) {
-    return ShoppingItem.fromAll(json["name"], json["description"], json["count"], json["id"]);
+    return ShoppingItem.fromAll(json["name"], json["description"], json["count"], getItemTypeFromString(json["type"]), json["id"]);
   }
 
-  Map<String, dynamic> toJson() => {'name': name, 'description': description, 'count': count, 'id': id};
+  Map<String, dynamic> toJson() => {'name': name, 'description': description, 'count': count, 'type': getStringFromItemType(type), 'id': id};
 
   Widget buildCard(BuildContext context, Function setStates) {
     return InkWell(

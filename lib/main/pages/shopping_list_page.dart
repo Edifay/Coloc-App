@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layout/main/utils/ItemType.dart';
 
 import '../handlers/ShoppingListHandler.dart';
 
@@ -25,7 +26,7 @@ class ShoppingListState extends State<ShoppingList> {
           children: [
             getShoppingList(() {
               setState(() {});
-            })
+            }),
           ],
         ),
       ),

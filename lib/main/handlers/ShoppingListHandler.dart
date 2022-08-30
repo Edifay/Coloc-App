@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:layout/main/utils/ItemType.dart';
 import 'package:layout/main/utils/ShoppingItem.dart';
 import 'package:layout/main/utils/Utils.dart';
 
@@ -31,7 +32,14 @@ Widget getShoppingList(Function setState) {
         shrinkWrap: true,
         itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
-          return Padding(padding: const EdgeInsets.fromLTRB(8, 2, 8, 0), child: snapshot.data![index].buildCard(context, setState));
+          return snapshot.data![index].name != "separator"
+              ? Padding(padding: const EdgeInsets.fromLTRB(8, 2, 8, 0), child: snapshot.data![index].buildCard(context, setState))
+              :  Container(
+                  height: 50,
+                  child: Center(
+                    child: Text(getStringFromItemType(snapshot.data![index].type)),
+                  ),
+                );
         },
       ),
     );

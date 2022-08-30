@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'package:layout/main/handlers/ShoppingListHandler.dart';
+import 'package:layout/main/utils/ItemType.dart';
 import 'package:layout/main/utils/ShoppingItem.dart';
 
 import '../../main.dart';
@@ -21,18 +22,10 @@ class ShoppingItemEditorState extends State<ShoppingItemEditor> {
 
   @override
   Widget build(BuildContext context) {
-    if (shoppingItemBuilder == null && ModalRoute
-        .of(context)!
-        .settings
-        .arguments != null) {
-      shoppingItemBuilder = ShoppingItemBuilder.import(ShoppingItem.fromJson(json.decode(ModalRoute
-          .of(context)!
-          .settings
-          .arguments
-          .toString())));
-    } else {
-      shoppingItemBuilder ??= ShoppingItemBuilder();
+    if (shoppingItemBuilder == null && ModalRoute.of(context)!.settings.arguments != null) {
+      shoppingItemBuilder = ShoppingItemBuilder.import(ShoppingItem.fromJson(json.decode(ModalRoute.of(context)!.settings.arguments.toString())));
     }
+    shoppingItemBuilder ??= ShoppingItemBuilder();
 
     return Scaffold(
       appBar: AppBar(title: Text("Edit Item")),
@@ -91,11 +84,27 @@ class ShoppingItemEditorState extends State<ShoppingItemEditor> {
                   ),
                 ),
               ),
+              DropdownButton(
+                value: getStringFromItemType(shoppingItemBuilder!.type!),
+                items: const [
+                  DropdownMenuItem(
+                    value: "ALIMENTAIRE",
+                    child: Icon(Icons.no_food_sharp),
+                  ),
+                  DropdownMenuItem(value: "MENAGE", child: Icon(Icons.wash_outlined)),
+                  DropdownMenuItem(value: "AUTRES", child: Icon(Icons.auto_awesome)),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    shoppingItemBuilder?.type = getItemTypeFromString(value.toString());
+                  });
+                },
+              ),
               Expanded(child: Container()),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: ElevatedButton(onPressed: !sending ? () => closeAndSave() : null, child: const Icon(Icons.save)),
-              )
+              ),
             ],
           ),
         ),
@@ -108,7 +117,7 @@ class ShoppingItemEditorState extends State<ShoppingItemEditor> {
       sending = true;
     });
     client.post("$DOMAIN_NAME/add-item?code=$password", data: json.encode(shoppingItemBuilder?.build())).then(
-          (value) {
+      (value) {
         needShoppingList();
         Navigator.pop(context);
       },
