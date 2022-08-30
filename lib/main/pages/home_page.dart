@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/main/handlers/ExpensesHandler.dart';
 import 'package:layout/main/handlers/TransactionHandler.dart';
-import 'package:layout/main.dart';
 import 'package:layout/main/utils/Transaction.dart';
 
+import '../../main.dart';
 import '../utils/Utils.dart';
 import 'components/ExpandableFloatingButton.dart';
 
@@ -28,6 +28,51 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Gestion du pot commun"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                needEquilibrate();
+                showDialog<void>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Equilibrage'),
+                    content: SimplifiedFuture<Transaction>().build(equilibrateTransaction, (context, snapshot) {
+                      return Container(
+                        height: 70,
+                        child: snapshot.data!.buildCard(context, () {}),
+                      );
+                    }),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Ok'),
+                      ),
+                    ],
+                  ),
+                ).then((value) {
+                  setState(() {
+                    needTransactions();
+                    needExpenses();
+                  });
+                });
+              },
+              icon: Icon(Icons.query_stats)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings').then((value) {
+                  if (!kIsWeb) {
+                    saveSettings(CONFIG_FILE_NAME);
+                  } else {
+                    saveWebSettings();
+                  }
+                  setState(() {
+                    needTransactions();
+                    needExpenses();
+                  });
+                });
+              },
+              icon: Icon(Icons.settings)),
+        ],
       ),
       body: Center(
         child: Column(
@@ -43,40 +88,40 @@ class HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                     child: Column(
-                      children: [
-                        const Text(
-                          "Arnaud",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SimplifiedFuture<num>().build(
-                          expensesArnaud,
-                              (context, snapshot) {
-                            return Text(
-                              "${snapshot.data}€",
-                              style: const TextStyle(fontSize: 18),
-                            );
-                          },
-                        )
-                      ],
-                    )),
+                  children: [
+                    const Text(
+                      "Arnaud",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SimplifiedFuture<num>().build(
+                      expensesArnaud,
+                      (context, snapshot) {
+                        return Text(
+                          "${snapshot.data}€",
+                          style: const TextStyle(fontSize: 18),
+                        );
+                      },
+                    )
+                  ],
+                )),
                 Expanded(
                     child: Column(
-                      children: [
-                        const Text(
-                          "Darius",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SimplifiedFuture<num>().build(
-                          expensesDarius,
-                              (context, snapshot) {
-                            return Text(
-                              "${snapshot.data}€",
-                              style: const TextStyle(fontSize: 18),
-                            );
-                          },
-                        )
-                      ],
-                    ))
+                  children: [
+                    const Text(
+                      "Darius",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SimplifiedFuture<num>().build(
+                      expensesDarius,
+                      (context, snapshot) {
+                        return Text(
+                          "${snapshot.data}€",
+                          style: const TextStyle(fontSize: 18),
+                        );
+                      },
+                    )
+                  ],
+                ))
               ],
             ),
             const Padding(
@@ -93,7 +138,7 @@ class HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: ExpandableFab(
-        distance: 105.0,
+        distance: 80.0,
         children: [
           ActionButton(
             onPressed: () {
@@ -103,37 +148,6 @@ class HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.add),
           ),
-          ActionButton(
-            onPressed: () {
-              needEquilibrate();
-              showDialog<void>(
-                context: context,
-                builder: (context) =>
-                    AlertDialog(
-                      title: const Text('Equilibrage'),
-                      content: SimplifiedFuture<Transaction>().build(equilibrateTransaction, (context, snapshot) {
-                        return Container(
-                          height: 70,
-                          child: snapshot.data!.buildCard(context, () {}),
-                        );
-                      }),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Ok'),
-                        ),
-                      ],
-                    ),
-              ).then((value) {
-                setState(() {
-                  needTransactions();
-                  needExpenses();
-                });
-              });
-            },
-            icon: const Icon(Icons.query_stats),
-          ),
-
           ActionButton(
             onPressed: () {
               Navigator.pushNamed(context, '/shopping-list').then((value) {
@@ -147,19 +161,14 @@ class HomePageState extends State<HomePage> {
           ),
           ActionButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/settings').then((value) {
-                if (!kIsWeb) {
-                  saveSettings(CONFIG_FILE_NAME);
-                }else{
-                  saveWebSettings();
-                }
+              Navigator.pushNamed(context, '/todo-action-list').then((value) {
                 setState(() {
                   needTransactions();
                   needExpenses();
                 });
               });
             },
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.today_outlined),
           ),
         ],
       ),

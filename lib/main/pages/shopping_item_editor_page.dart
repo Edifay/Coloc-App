@@ -28,13 +28,13 @@ class ShoppingItemEditorState extends State<ShoppingItemEditor> {
     shoppingItemBuilder ??= ShoppingItemBuilder();
 
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Item")),
+      appBar: AppBar(title: const Text("Edit Item")),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
         child: Center(
           child: Column(
             children: [
-              Text("Gérer un produit", textAlign: TextAlign.center, style: TextStyle(fontSize: 30)),
+              const Text("Gérer un produit", textAlign: TextAlign.center, style: TextStyle(fontSize: 30)),
               Row(
                 children: [
                   Expanded(
@@ -84,26 +84,34 @@ class ShoppingItemEditorState extends State<ShoppingItemEditor> {
                   ),
                 ),
               ),
-              DropdownButton(
-                value: getStringFromItemType(shoppingItemBuilder!.type!),
-                items: const [
-                  DropdownMenuItem(
-                    value: "ALIMENTAIRE",
-                    child: Icon(Icons.no_food_sharp),
-                  ),
-                  DropdownMenuItem(value: "MENAGE", child: Icon(Icons.wash_outlined)),
-                  DropdownMenuItem(value: "AUTRES", child: Icon(Icons.auto_awesome)),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    shoppingItemBuilder?.type = getItemTypeFromString(value.toString());
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: DropdownButton(
+                  value: getStringFromItemType(shoppingItemBuilder!.type!),
+                  items: const [
+                    DropdownMenuItem(
+                      value: "ALIMENTAIRE",
+                      child: Icon(Icons.no_food_sharp),
+                    ),
+                    DropdownMenuItem(value: "MENAGE", child: Icon(Icons.wash_outlined)),
+                    DropdownMenuItem(value: "AUTRES", child: Icon(Icons.auto_awesome)),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      shoppingItemBuilder?.type = getItemTypeFromString(value.toString());
+                    });
+                  },
+                ),
               ),
               Expanded(child: Container()),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                child: ElevatedButton(onPressed: !sending ? () => closeAndSave() : null, child: const Icon(Icons.save)),
+                child: ElevatedButton(
+                    onPressed: !sending ? () => closeAndSave() : null,
+                    child: const Icon(
+                      Icons.save,
+                      size: 30,
+                    )),
               ),
             ],
           ),
