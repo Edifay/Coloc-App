@@ -1,5 +1,6 @@
-import 'package:layout/main/utils/Priority.dart';
-import 'package:layout/main/utils/TodoAction.dart';
+
+import '../TodoAction.dart';
+import '../classification/Priority.dart';
 
 class TodoActionBuilder {
   String? name;

@@ -1,6 +1,6 @@
-import 'package:layout/main/utils/ItemType.dart';
 
-import 'ShoppingItem.dart';
+import '../ShoppingItem.dart';
+import '../classification/ItemType.dart';
 
 class ShoppingItemBuilder {
   String? name;

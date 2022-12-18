@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:layout/main/pages/app_settings_page.dart';
-import 'package:layout/main/pages/shopping_item_editor_page.dart';
-import 'package:layout/main/pages/shopping_list_page.dart';
-import 'package:layout/main/pages/todo_action_editor_page.dart';
-import 'package:layout/main/pages/todo_action_list_page.dart';
-import 'package:layout/main/pages/transaction_editor_page.dart';
-import 'package:layout/main/pages/home_page.dart';
+import 'package:layout/main/pages/settings/AppSettings_Page.dart';
+import 'package:layout/main/pages/Shopping/ShoppingItemEditor_Page.dart';
+import 'package:layout/main/pages/Shopping/ShoppingList_Page.dart';
+import 'package:layout/main/pages/home&transaction/Home_Page.dart';
+import 'package:layout/main/pages/home&transaction/TransactionEditor_Page.dart';
+import 'package:layout/main/pages/todo/TodoActionEditor_Page.dart';
+import 'package:layout/main/pages/todo/TodoActionList_Page.dart';
 
 MaterialApp getAppDefinition() {
   return MaterialApp(title: 'Navigation Basics', initialRoute: '/', routes: {

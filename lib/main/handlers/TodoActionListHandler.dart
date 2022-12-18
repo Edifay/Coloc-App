@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:layout/main/utils/Priority.dart';
-import 'package:layout/main/utils/TodoAction.dart';
-import 'package:layout/main/utils/Utils.dart';
-
 import '../../main.dart';
 import 'package:flutter/material.dart';
+
+import '../container/TodoAction.dart';
+import '../container/Utils.dart';
+import '../container/classification/Priority.dart';
 
 late Future<List<TodoAction>> todoActions;
 

@@ -10,6 +10,7 @@ class SimplifiedFuture<T> {
           if (snapshot.hasData) {
             return func(context, snapshot);
           } else if (snapshot.hasError) {
+            print(snapshot.error);
             return Text("${snapshot.error}");
           }
           return const CircularProgressIndicator();

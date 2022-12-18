@@ -15,6 +15,6 @@ Person getPersonFromString(String person) {
   return atReturn;
 }
 
-String getStringFromPerson(Person person){
+String getStringFromPerson(Person person) {
   return person.toString().split(".")[1];
 }

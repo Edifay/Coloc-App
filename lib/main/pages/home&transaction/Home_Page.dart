@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/main/handlers/ExpensesHandler.dart';
-import 'package:layout/main/handlers/TransactionHandler.dart';
-import 'package:layout/main/utils/Transaction.dart';
-
-import '../../main.dart';
-import '../utils/Utils.dart';
+import '../../../main.dart';
+import '../../container/Transaction.dart';
+import '../../container/Utils.dart';
+import '../../handlers/TransactionHandler.dart';
 import 'components/ExpandableFloatingButton.dart';
 
 class HomePage extends StatefulWidget {
@@ -124,12 +123,86 @@ class HomePageState extends State<HomePage> {
                 ))
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(5, 30, 5, 15),
-              child: Text(
-                "Les transactions",
-                style: TextStyle(fontSize: 22),
-              ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 30, 5, 0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                const Text(
+                  "Les transactions",
+                  style: TextStyle(fontSize: 22),
+                ),
+                IconButton(
+                    onPressed: () async {
+                      needTransactionsListSave();
+                      await showDialog(
+                          context: context,
+                          builder: (context) => StatefulBuilder(
+                              builder: (context, setState) => AlertDialog(
+                                    title: const Text("Paramètres des transactions"),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Column(
+                                          children: [const Text("Voici les transactions disponibles :"), getTransactionsListSaved()],
+                                        ),
+                                        Container(
+                                          height: 20,
+                                        ),
+                                        Column(
+                                          children: [
+                                            const Text("Créer une sauvegarde ? "),
+                                            Container(
+                                              height: 20,
+                                            ),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) => AlertDialog(
+                                                            title: const Text("Créer une save."),
+                                                            content: const Text(
+                                                                "Cette action est irréversible et ne peut être effectuée qu'une seule fois par jour.\n\nVous ne pourrez plus modifier les transactions de cette save."),
+                                                            actions: [
+                                                              ElevatedButton(
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      needTransactionsListSave();
+                                                                    });
+                                                                    createASave();
+                                                                    Navigator.pop(context);
+                                                                    setState(() {
+                                                                      needTransactionsListSave();
+                                                                    });
+                                                                  },
+                                                                  child: const Text("Créer"))
+                                                            ],
+                                                          ));
+                                                },
+                                                child: const Text("Créer"))
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Close"))
+                                    ],
+                                  )));
+                      setState(() {
+                        needTransactions();
+                        needExpenses();
+                      });
+                    },
+                    icon: const Icon(Icons.settings))
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+              child: (() {
+                if (save != "current") return Text(save);
+              }()),
             ),
             getListTransaction(() {
               setState(() {});

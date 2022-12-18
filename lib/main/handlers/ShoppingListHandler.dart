@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:layout/main/utils/ItemType.dart';
-import 'package:layout/main/utils/ShoppingItem.dart';
-import 'package:layout/main/utils/Utils.dart';
 
 import '../../main.dart';
 import 'package:flutter/material.dart';
+
+import '../container/classification/ItemType.dart';
+import '../container/ShoppingItem.dart';
+import '../container/Utils.dart';
 
 late Future<List<ShoppingItem>> shoppingItems;
 

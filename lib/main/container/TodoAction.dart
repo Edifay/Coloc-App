@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:layout/main/handlers/TodoActionListHandler.dart';
-import 'package:layout/main/utils/Priority.dart';
+
+import '../handlers/TodoActionListHandler.dart';
+import 'classification/Priority.dart';
 
 class TodoAction {
   String name;

@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:layout/main.dart';
 
-import 'Person.dart';
+import 'classification/Person.dart';
 
 class Transaction {
   String object;

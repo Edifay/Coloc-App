@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:layout/main/utils/ItemType.dart';
 
-import '../handlers/ShoppingListHandler.dart';
+import '../../handlers/ShoppingListHandler.dart';
 
 class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);

@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../handlers/ShoppingListHandler.dart';
-import 'ItemType.dart';
+import 'classification/ItemType.dart';
 
 class ShoppingItem {
   String name;

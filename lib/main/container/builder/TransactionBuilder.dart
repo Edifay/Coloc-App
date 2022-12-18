@@ -1,7 +1,6 @@
-import 'package:layout/main/utils/Transaction.dart';
-
-import '../../main.dart';
-import 'Person.dart';
+import '../../../main.dart';
+import '../Transaction.dart';
+import '../classification/Person.dart';
 
 class TransactionBuilder {
   String? object;

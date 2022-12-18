@@ -1,14 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:layout/main/handlers/TransactionHandler.dart';
-import 'package:layout/main/utils/Person.dart';
-import 'package:layout/main/utils/Transaction.dart';
-import 'package:layout/main/utils/TransactionBuilder.dart';
-
-import '../handlers/ExpensesHandler.dart';
-import '../../main.dart';
+import '../../container/Transaction.dart';
+import '../../container/builder/TransactionBuilder.dart';
+import '../../container/classification/Person.dart';
+import '../../handlers/ExpensesHandler.dart';
+import '../../../main.dart';
 
 class TransactionEditor extends StatefulWidget {
   const TransactionEditor({Key? key}) : super(key: key);
@@ -194,7 +192,7 @@ class TransactionEditorState extends State<TransactionEditor> {
                     width: 70,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: (isPriceGood && !sending ? () => closeAndSave() : null),
+                      onPressed: (isPriceGood && !sending && save == "current" ? () => closeAndSave() : null),
                       child: const Icon(
                         Icons.save,
                         size: 30,
@@ -244,10 +242,7 @@ class TransactionEditorState extends State<TransactionEditor> {
         },
       );
     } else {
-      client
-          .post("$DOMAIN_NAME/create-transaction?code=$password",
-              data: json.encode(transactionBuilder?.build()))
-          .then(
+      client.post("$DOMAIN_NAME/create-transaction?code=$password", data: json.encode(transactionBuilder?.build())).then(
         (value) {
           needTransactions();
           needExpenses();

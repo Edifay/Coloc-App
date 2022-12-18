@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../main.dart';
 
-import '../utils/Person.dart';
-import '../utils/Transaction.dart';
+import '../container/Transaction.dart';
+import '../container/classification/Person.dart';
 
 late Future<num> expensesArnaud;
 late Future<num> expensesDarius;
@@ -24,7 +21,12 @@ void needExpenses() {
 
 Future<num> fetchExpenses(Person person) async {
   await loadingFuture;
-  Response<num> response = await client.get('$DOMAIN_NAME/get-expenses?person=${getStringFromPerson(person)}&code=$password');
+  Response<num> response;
+  if (save == "current") {
+    response = await client.get('$DOMAIN_NAME/get-expenses?person=${getStringFromPerson(person)}&code=$password');
+  }else{
+    response = await client.get('$DOMAIN_NAME/get-expenses-saved?person=${getStringFromPerson(person)}&name=$save&code=$password');
+  }
   if (response.statusCode == 200) {
     //num test = json.decode(response.data);
     print("Loaded expenses for : ${getStringFromPerson(person)} -> ${response.data!} €");

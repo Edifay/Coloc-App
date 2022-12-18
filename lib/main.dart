@@ -7,9 +7,10 @@ import 'package:layout/main/app_definition.dart';
 
 import 'dart:io';
 
-import 'package:layout/main/utils/Person.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'main/container/classification/Person.dart';
 
 const String CONFIG_FILE_NAME = "settings.txt";
 
@@ -20,6 +21,8 @@ String password = "";
 late Future<void> loadingFuture;
 
 Person you = Person.ARNAUD;
+
+String save = "current";
 
 Dio client = Dio();
 
@@ -86,7 +89,7 @@ Future<Map<String, dynamic>> readSettings(String fileName) async {
     return json.decode(contents);
   } catch (e) {
     print("IMPOSSIBLE DE CHARGER LES FICHIERS : $e");
-    return {"DOMAIN_NAME": "http://locahost:9999", "person": "ARNAUD", "password": "default"};
+    return {"DOMAIN_NAME": "http://locahost:9999", "person": "ARNAUD", "password": "default", "save": "current"};
   }
 }
 
@@ -96,8 +99,13 @@ Future<void> loadSettings() async {
   DOMAIN_NAME = json["DOMAIN_NAME"];
   you = getPersonFromString(json["person"]);
   password = json["password"];
+  if (json["save"] == null) {
+    save = "current";
+  } else {
+    save = json["save"];
+  }
 }
 
 Map<String, dynamic> SettingsToJSON() {
-  return {"DOMAIN_NAME": DOMAIN_NAME, "person": getStringFromPerson(you), "password": password};
+  return {"DOMAIN_NAME": DOMAIN_NAME, "person": getStringFromPerson(you), "password": password, "save": save};
 }

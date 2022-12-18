@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:layout/main/handlers/TodoActionListHandler.dart';
-import 'package:layout/main/utils/Priority.dart';
-import 'package:layout/main/utils/TodoAction.dart';
-
-import '../../main.dart';
-import '../utils/TodoActionBuilder.dart';
+import '../../container/TodoAction.dart';
+import '../../container/builder/TodoActionBuilder.dart';
+import '../../container/classification/Priority.dart';
+import 'package:layout/main.dart';
 
 class TodoActionEditor extends StatefulWidget {
   const TodoActionEditor({Key? key}) : super(key: key);

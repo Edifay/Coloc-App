@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'package:layout/main/handlers/ShoppingListHandler.dart';
-import 'package:layout/main/utils/ItemType.dart';
-import 'package:layout/main/utils/ShoppingItem.dart';
-
-import '../../main.dart';
-import '../utils/ShoppingItemBuilder.dart';
+import '../../../main.dart';
+import '../../container/classification/ItemType.dart';
+import '../../container/ShoppingItem.dart';
+import '../../container/builder/ShoppingItemBuilder.dart';
 
 class ShoppingItemEditor extends StatefulWidget {
   const ShoppingItemEditor({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
-import '../utils/Person.dart';
+import '../../../main.dart';
+import '../../container/classification/Person.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
